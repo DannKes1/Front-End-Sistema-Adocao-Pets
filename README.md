@@ -47,3 +47,75 @@ Este é o front-end de um projeto acadêmico que visa gerenciar adoções de ani
 2. Abra o terminal na raiz do projeto e execute:
    ```bash
    npm install
+
+## 4. Estrutura de Pastas
+   .
+├── public
+├── src
+│   ├── assets
+│   │   └── images        # Imagens utilizadas (banners, depoimentos, etc.)
+│   ├── components
+│   │   └── NavbarMenu.js # Menu de navegação superior
+│   ├── pages
+│   │   ├── Home.js       # Página inicial
+│   │   ├── Login.js      # Formulário de login
+│   │   ├── Register.js   # Formulário de cadastro
+│   │   ├── PetsCards.js  # Listagem dos pets em cards
+│   │   ├── PetCreate.js  # Criação de um novo pet
+│   │   ├── PetEdit.js    # Edição de um pet
+│   │   ├── PetDetail.js  # Detalhes de um pet específico
+│   │   └── ...
+│   ├── services
+│   │   └── api.js        # Configuração base do Axios
+│   └── App.js            # Lógica principal do React + Rotas
+├── package.json
+└── ...
+
+
+
+## 5. Scripts Disponíveis
+No projeto, você pode executar:
+
+npm start
+Roda a aplicação em modo de desenvolvimento.
+Abra http://localhost:3000 (ou outra porta livre) para visualizar no navegador.
+
+npm run build
+Cria a versão otimizada de produção na pasta build.
+
+npm test
+Executa os testes configurados (caso existam).
+
+## 6. Configurações Importantes
+URL da API:
+Dentro de src/services/api.js, a base URL do Axios está definida como:
+baseURL: "http://localhost:3000"
+
+Se o back-end estiver em outro local (ex: outra porta, outro domínio), ajuste conforme necessário.
+
+Token de Autenticação:
+Após login, o token JWT é salvo em localStorage:
+localStorage.setItem("token", token)
+
+Esse token é incluído automaticamente em todas as requisições via o api.interceptors.request no arquivo api.js.
+Proteção de Rotas:
+Algumas rotas (como criação/edição de pet) são acessíveis apenas se o token estiver presente.
+Caso o token expire ou seja inválido, o usuário é redirecionado para o login.
+
+## 7. Fluxo de Navegação
+Home (/): exibe banners, depoimentos e links para visualizar pets ou se registrar.
+Login (/login): formulário de login. Ao logar, o token é salvo e o usuário é redirecionado para /pets.
+Cadastro (/register): formulário de cadastro de usuário (nome, email, senha, CEP, etc.).
+Pets (/pets): lista de animais disponíveis em formato de cards. Possui busca básica e filtros de categoria/localização (não 100% funcionais).
+Criar Pet (/pets/create): exige usuário logado. Formulário com upload de imagem.
+Editar Pet (/pets/edit/:id): exige usuário logado. Somente dono do pet ou admin podem editar.
+Detalhes do Pet (/pets/:id): exibe detalhes de um pet, com possibilidade de abrir modal de imagem.
+
+## 8. Observações
+Busca e Filtros: há lógica no componente PetsCards para filtrar por nome (search), categoria e localização. Isso é feito client-side, mas não está 100% validado.
+Recuperação de Senha: o link “Esqueceu a senha?” em Login.js direciona para /password/forgot no back-end. Entretanto, a implementação de envio de email no back-end pode não funcionar completamente.
+Validações: há validações simples de formulário (ex: required) e formatação (CEP, telefone). No entanto, nem todos os cenários de erro podem estar cobertos.
+
+
+## 9. Licença
+Este projeto foi desenvolvido para fins de estudo/atividade acadêmica.
